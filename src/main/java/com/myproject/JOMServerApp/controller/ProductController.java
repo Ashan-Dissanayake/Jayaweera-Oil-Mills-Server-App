@@ -64,5 +64,26 @@ public class ProductController {
         return response;
     }
 
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public HashMap<String, String> update(@RequestBody Product product){
+        HashMap<String, String> response = new HashMap<>();
+
+        String errors="";
+
+        Product prd = productdao.findByCode(product.getCode());
+
+        if (prd!=null && product.getId()!=prd.getId())
+            errors = errors + "<br> Existing Code";
+
+        if (errors=="") productdao.save(product);
+        else errors = "Server Validation Errors : <br> "+ errors;
+
+        response.put("id",String.valueOf(product.getId()));
+        response.put("url","/products/"+product.getId());
+        response.put("errors",errors);
+
+        return response;
+    }
 
 }
