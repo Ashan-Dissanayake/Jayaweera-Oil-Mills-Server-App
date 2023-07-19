@@ -86,4 +86,25 @@ public class ProductController {
         return response;
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public HashMap<String,String> delete(@PathVariable Integer id){
+
+        HashMap<String,String> response = new HashMap<>();
+
+        String errors="";
+
+        Product prd = productdao.findByMyId(id);
+        if(prd==null)
+            errors = errors+"<br> Product Does Not Existed";
+        if(errors=="") productdao.delete(prd);
+        else errors = "Server Validation Errors : <br> "+errors;
+
+        response.put("id",String.valueOf(id));
+        response.put("url","/products/"+id);
+        response.put("errors",errors);
+
+        return response;
+    }
+
 }
