@@ -1,6 +1,7 @@
 package com.myproject.JOMServerApp.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Arrays;
@@ -15,9 +16,11 @@ public class Product {
     private Integer id;
     @Basic
     @Column(name = "name")
+    @Pattern(regexp = "^([A-Z][a-z]+)$", message = "Invalid  Name")
     private String name;
     @Basic
     @Column(name = "code")
+    @Pattern(regexp = "P[0-9]{3}", message = "Invalid Code")
     private String code;
     @Basic
     @Column(name = "price")
@@ -27,6 +30,7 @@ public class Product {
     private Integer expireduration;
     @Basic
     @Column(name = "description")
+    @Pattern(regexp = "^.*$", message = "Invalid Description")
     private String description;
     @Basic
     @Column(name = "image")

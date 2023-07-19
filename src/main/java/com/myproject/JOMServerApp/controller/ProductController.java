@@ -4,6 +4,7 @@ package com.myproject.JOMServerApp.controller;
 import com.myproject.JOMServerApp.dao.ProductDao;
 import com.myproject.JOMServerApp.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -39,4 +40,29 @@ public class ProductController {
         return products;
 
     }
+
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public HashMap<String,String> add(@RequestBody Product product){
+
+        HashMap<String,String> response = new HashMap<>();
+        String errors ="";
+
+        if (productdao.findByCode(product.getCode())!=null)
+            errors = errors+"<br> Existing Code";
+
+
+        if (errors=="")
+            productdao.save(product);
+        else errors = "Server Validation Errors : <br> "+ errors;
+
+        response.put("id",String.valueOf(product.getId()));
+        response.put("url","/products/"+product.getId());
+        response.put("errors",errors);
+
+        return response;
+    }
+
+
 }
