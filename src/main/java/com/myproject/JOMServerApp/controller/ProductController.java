@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -53,7 +54,7 @@ public class ProductController {
             errors = errors+"<br> Existing Code";
 
 
-        if (errors=="")
+        if (errors.equals(""))
             productdao.save(product);
         else errors = "Server Validation Errors : <br> "+ errors;
 
@@ -73,10 +74,10 @@ public class ProductController {
 
         Product prd = productdao.findByCode(product.getCode());
 
-        if (prd!=null && product.getId()!=prd.getId())
+        if (prd!=null && !Objects.equals(product.getId(), prd.getId()))
             errors = errors + "<br> Existing Code";
 
-        if (errors=="") productdao.save(product);
+        if (errors.equals("")) productdao.save(product);
         else errors = "Server Validation Errors : <br> "+ errors;
 
         response.put("id",String.valueOf(product.getId()));
@@ -97,7 +98,7 @@ public class ProductController {
         Product prd = productdao.findByMyId(id);
         if(prd==null)
             errors = errors+"<br> Product Does Not Existed";
-        if(errors=="") productdao.delete(prd);
+        if(errors.equals("")) productdao.delete(prd);
         else errors = "Server Validation Errors : <br> "+errors;
 
         response.put("id",String.valueOf(id));
