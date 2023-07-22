@@ -72,7 +72,12 @@ public class Employee {
     @JsonIgnore
     private Collection<User> users;
 
-    public Employee(){};
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    private Collection<Oorder> oorders;
+
+public Employee(){}
+
     public Employee(int id, String callingname){
         this.id = id;
         this.callingname = callingname;
@@ -219,5 +224,13 @@ public class Employee {
 
     public void setUsers(Collection<User> users) {
         this.users = users;
+    }
+
+    public Collection<Oorder> getOorders() {
+        return oorders;
+    }
+
+    public void setOorders(Collection<Oorder> oorders) {
+        this.oorders = oorders;
     }
 }

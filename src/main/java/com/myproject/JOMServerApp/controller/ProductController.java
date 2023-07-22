@@ -2,6 +2,7 @@ package com.myproject.JOMServerApp.controller;
 
 
 import com.myproject.JOMServerApp.dao.ProductDao;
+import com.myproject.JOMServerApp.entity.Employee;
 import com.myproject.JOMServerApp.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,22 @@ public class ProductController {
                     if (code!=null) return product.getCode().equalsIgnoreCase(code);
                     if (statusid!=null) return product.getProductstatus().getId()==Integer.parseInt(statusid);
                     return false;}
+        ).collect(Collectors.toList());
+
+        return products;
+
+    }
+
+    @GetMapping(path ="/list",produces = "application/json")
+    public List<Product> get() {
+
+        List<Product> products = this.productdao.findAllByNameIdPrice();
+
+        products = products.stream().map(
+                product -> {
+                    Product e = new Product(product.getId(), product.getName(),product.getPrice());
+                    return  e;
+                }
         ).collect(Collectors.toList());
 
         return products;
