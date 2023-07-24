@@ -39,6 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String token = authorizationHeader.replace("Bearer ", "");
         String username = jwtTokenUtil.extractUsername(token);
+
         UserDetails userDetails = userService.loadUserByUsername(username);
 
         if (!jwtTokenUtil.validateToken(token, userDetails)) {
@@ -55,57 +56,3 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-//
-//public class JwtAuthorizationFilter extends OncePerRequestFilter {
-//
-//    private final AuthenticationManager authenticationManager;
-//    private final JwtTokenUtil jwtTokenUtil;
-//    private final UserService userService;
-//
-//    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserService userService) {
-//        this.authenticationManager = authenticationManager;
-//        this.jwtTokenUtil = jwtTokenUtil;
-//        this.userService = userService;
-//    }
-//
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-//        String authorizationHeader = request.getHeader("Authorization");
-//
-//        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-//
-//        String token = authorizationHeader.replace("Bearer ", "");
-//        String username = jwtTokenUtil.extractUsername(token);
-//
-//        if (username == null || SecurityContextHolder.getContext().getAuthentication() != null) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-//
-//        UserDetails userDetails = userService.loadUserByUsername(username);
-//
-//        if (!jwtTokenUtil.validateToken(token, userDetails)) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-//
-//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        chain.doFilter(request, response);
-//    }
-//}

@@ -24,8 +24,6 @@ public class LoginController {
     @PostMapping("/login2")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 
-//        System.out.println("Login");
-
         User user = new User();
 
         // Authenticate the user

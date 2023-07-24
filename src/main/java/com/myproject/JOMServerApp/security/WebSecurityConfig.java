@@ -1,6 +1,5 @@
 package com.myproject.JOMServerApp.security;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +10,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -40,9 +39,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/dilee").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/", "/").permitAll()
+                .and()
+                .logout()
+                .permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), wsJwtTokenUtil(), userService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(new JwtAuthorizationFilter(authenticationManager(), wsJwtTokenUtil(), userService), JwtAuthenticationFilter.class)
@@ -54,9 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder())
         .and()
                 .inMemoryAuthentication()
-                .withUser("ruki")
-                .password(passwordEncoder().encode("Ruki"))
+                .withUser("dilee")
+                .password(passwordEncoder().encode("Admin321"))
                 .roles("ACC");
+
     }
 
     @Bean

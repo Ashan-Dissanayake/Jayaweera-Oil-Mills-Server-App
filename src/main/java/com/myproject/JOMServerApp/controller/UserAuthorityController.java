@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
@@ -24,19 +25,24 @@ public class UserAuthorityController {
     @ResponseStatus(HttpStatus.CREATED)
     public List<String> getUserAuthoritiesByUsername(@PathVariable String username) {
         User user = userdao.findByUsername(username);
-        List<Userrole> userroles = (List<Userrole>) user.getUserroles();
         List<String> authorities = new ArrayList<>();
 
-        for (Userrole u : userroles) {
-            List<Privilage> privilages = (List<Privilage>) u.getRole().getPrivilages();
-            for (Privilage p : privilages) {
-                String authority = p.getAuthority();
-                authorities.add(authority);
+        if (user != null){
+            List<Userrole> userroles = (List<Userrole>) user.getUserroles();
+
+            for (Userrole u : userroles) {
+                List<Privilage> privilages = (List<Privilage>) u.getRole().getPrivilages();
+                for (Privilage p : privilages) {
+                    String authority = p.getAuthority();
+                    authorities.add(authority);
+                }
             }
+        }else{
+            authorities = Arrays.asList("user-select","user-delete","user-update","user-insert",
+                    "privilege-select","privilege-delete","privilege-update","privilege-insert");
         }
 
         return authorities;
-    }
-
+}
 
 }
