@@ -2,7 +2,6 @@ package com.myproject.JOMServerApp.controller;
 
 
 import com.myproject.JOMServerApp.dao.ProductDao;
-import com.myproject.JOMServerApp.entity.Employee;
 import com.myproject.JOMServerApp.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

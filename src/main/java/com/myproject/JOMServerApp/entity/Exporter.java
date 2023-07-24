@@ -1,10 +1,9 @@
 package com.myproject.JOMServerApp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Exporter {
@@ -17,21 +16,26 @@ public class Exporter {
     private String name;
     @Basic
     @Column(name = "telephone")
+    @Pattern(regexp = "^0\\d{9}$", message = "Invalid Telephone Number")
     private String telephone;
     @Basic
     @Column(name = "email")
+    @Pattern(regexp = "^(?=.{1,155}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid Email Address")
     private String email;
     @Basic
     @Column(name = "address")
+    @Pattern(regexp = "^([\\w\\/\\-,\\s]{2,})$", message = "Invalid Address")
     private String address;
     @Basic
     @Column(name = "contactperson")
     private String contactperson;
     @Basic
     @Column(name = "contacttlp")
+    @Pattern(regexp = "^0\\d{9}$", message = "Invalid Contact Number")
     private String contacttlp;
     @Basic
     @Column(name = "description")
+    @Pattern(regexp = "^.*$", message = "Invalid Description")
     private String description;
     @Basic
     @Column(name = "creditlimit")
@@ -42,17 +46,13 @@ public class Exporter {
     @ManyToOne
     @JoinColumn(name = "exportertype_id", referencedColumnName = "id", nullable = false)
     private Exportertype exportertype;
-    @OneToMany(mappedBy = "exporter")
-    @JsonIgnore
-    private Collection<Oorder> oorders;
 
-    public Exporter(){}
+public Exporter(){}
 
-    public  Exporter(Integer id, String name){
+    public Exporter(int id, String name){
         this.id = id;
         this.name = name;
     }
-
 
     public Integer getId() {
         return id;
@@ -130,37 +130,13 @@ public class Exporter {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Exporter exporter = (Exporter) o;
-
-        if (id != null ? !id.equals(exporter.id) : exporter.id != null) return false;
-        if (name != null ? !name.equals(exporter.name) : exporter.name != null) return false;
-        if (telephone != null ? !telephone.equals(exporter.telephone) : exporter.telephone != null) return false;
-        if (email != null ? !email.equals(exporter.email) : exporter.email != null) return false;
-        if (address != null ? !address.equals(exporter.address) : exporter.address != null) return false;
-        if (contactperson != null ? !contactperson.equals(exporter.contactperson) : exporter.contactperson != null)
-            return false;
-        if (contacttlp != null ? !contacttlp.equals(exporter.contacttlp) : exporter.contacttlp != null) return false;
-        if (description != null ? !description.equals(exporter.description) : exporter.description != null)
-            return false;
-        if (creditlimit != null ? !creditlimit.equals(exporter.creditlimit) : exporter.creditlimit != null)
-            return false;
-
-        return true;
+        return Objects.equals(id, exporter.id) && Objects.equals(name, exporter.name) && Objects.equals(telephone, exporter.telephone) && Objects.equals(email, exporter.email) && Objects.equals(address, exporter.address) && Objects.equals(contactperson, exporter.contactperson) && Objects.equals(contacttlp, exporter.contacttlp) && Objects.equals(description, exporter.description) && Objects.equals(creditlimit, exporter.creditlimit);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (contactperson != null ? contactperson.hashCode() : 0);
-        result = 31 * result + (contacttlp != null ? contacttlp.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (creditlimit != null ? creditlimit.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, telephone, email, address, contactperson, contacttlp, description, creditlimit);
     }
 
     public Exporterstatus getExporterstatus() {
@@ -179,11 +155,4 @@ public class Exporter {
         this.exportertype = exportertype;
     }
 
-    public Collection<Oorder> getOorders() {
-        return oorders;
-    }
-
-    public void setOorders(Collection<Oorder> oorders) {
-        this.oorders = oorders;
-    }
 }

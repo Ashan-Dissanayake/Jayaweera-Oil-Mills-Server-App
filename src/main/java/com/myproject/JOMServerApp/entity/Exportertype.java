@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Exportertype {
@@ -14,8 +15,8 @@ public class Exportertype {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "exportertype")
     @JsonIgnore
+    @OneToMany(mappedBy = "exportertype")
     private Collection<Exporter> exporters;
 
     public Integer getId() {
@@ -38,20 +39,13 @@ public class Exportertype {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Exportertype that = (Exportertype) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name);
     }
 
     public Collection<Exporter> getExporters() {

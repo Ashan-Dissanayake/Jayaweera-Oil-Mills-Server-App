@@ -1,13 +1,11 @@
 package com.myproject.JOMServerApp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -59,9 +57,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "subcategory_id", referencedColumnName = "id", nullable = false)
     private Subcategory subcategory;
-    @OneToMany(mappedBy = "product")
-    @JsonIgnore
-    private Collection<Orderproduct> orderproducts;
 
 
     public Product(){}
@@ -199,11 +194,4 @@ public class Product {
         this.subcategory = subcategory;
     }
 
-    public Collection<Orderproduct> getOrderproducts() {
-        return orderproducts;
-    }
-
-    public void setOrderproducts(Collection<Orderproduct> orderproducts) {
-        this.orderproducts = orderproducts;
-    }
 }

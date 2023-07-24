@@ -68,15 +68,16 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "employeestatus_id", referencedColumnName = "id", nullable = false)
     private Employeestatus employeestatus;
-    @OneToMany(mappedBy = "employee")
+
     @JsonIgnore
+    @OneToMany(mappedBy = "employee")
     private Collection<User> users;
 
-    @OneToMany(mappedBy = "employee")
     @JsonIgnore
-    private Collection<Oorder> oorders;
+    @OneToMany(mappedBy = "employee")
+    private Collection<Invoice> invoices;
 
-public Employee(){}
+    public Employee(){}
 
     public Employee(int id, String callingname){
         this.id = id;
@@ -226,11 +227,11 @@ public Employee(){}
         this.users = users;
     }
 
-    public Collection<Oorder> getOorders() {
-        return oorders;
+    public Collection<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setOorders(Collection<Oorder> oorders) {
-        this.oorders = oorders;
+    public void setInvoices(Collection<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }

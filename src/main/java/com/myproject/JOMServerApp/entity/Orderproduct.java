@@ -24,6 +24,9 @@ public class Orderproduct {
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     private Product product;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "orderproduct")
+//    private Collection<Invoiceorderproduct> invoiceorderproducts;
 
     public Integer getId() {
         return id;
@@ -87,4 +90,12 @@ public class Orderproduct {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+//    public Collection<Invoiceorderproduct> getInvoiceorderproducts() {
+//        return invoiceorderproducts;
+//    }
+//
+//    public void setInvoiceorderproducts(Collection<Invoiceorderproduct> invoiceorderproducts) {
+//        this.invoiceorderproducts = invoiceorderproducts;
+//    }
 }

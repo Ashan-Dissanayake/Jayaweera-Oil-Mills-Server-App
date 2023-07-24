@@ -4,12 +4,9 @@ package com.myproject.JOMServerApp.controller;
 import com.myproject.JOMServerApp.dao.OrderDao;
 import com.myproject.JOMServerApp.entity.Oorder;
 import com.myproject.JOMServerApp.entity.Orderproduct;
-import com.myproject.JOMServerApp.entity.User;
-import com.myproject.JOMServerApp.entity.Userrole;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

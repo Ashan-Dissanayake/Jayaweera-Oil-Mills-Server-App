@@ -1,5 +1,7 @@
 package com.myproject.JOMServerApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -34,7 +36,16 @@ public class Oorder {
     private Employee employee;
     @OneToMany(mappedBy = "oorder",cascade = CascadeType.ALL,orphanRemoval = true)
     private Collection<Orderproduct> orderproducts;
+    @JsonIgnore
+    @OneToMany(mappedBy = "oorder")
+    private Collection<Invoice> invoices;
 
+    public Oorder(){}
+
+    public Oorder(int id, BigDecimal expectedgrandtotal){
+        this.id = id;
+        this.expectedgrandtotal = expectedgrandtotal;
+    }
 
     public Integer getId() {
         return id;
@@ -133,5 +144,13 @@ public class Oorder {
 
     public void setOrderproducts(Collection<Orderproduct> orderproducts) {
         this.orderproducts = orderproducts;
+    }
+
+    public Collection<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(Collection<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }
