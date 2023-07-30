@@ -3,6 +3,7 @@ package com.myproject.JOMServerApp.controller;
 
 import com.myproject.JOMServerApp.dao.InvoiceDao;
 import com.myproject.JOMServerApp.entity.Invoice;
+import com.myproject.JOMServerApp.entity.Oorder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

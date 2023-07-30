@@ -39,7 +39,9 @@ public class UserAuthorityController {
             }
         }else{
             authorities = Arrays.asList("user-select","user-delete","user-update","user-insert",
-                    "privilege-select","privilege-delete","privilege-update","privilege-insert");
+                    "privilege-select","privilege-delete","privilege-update","privilege-insert",
+                    "employee-select","employee-delete","employee-update","employee-insert"
+            );
         }
 
         return authorities;

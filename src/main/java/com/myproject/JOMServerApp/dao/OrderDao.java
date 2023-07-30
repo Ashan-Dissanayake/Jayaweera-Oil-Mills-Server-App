@@ -13,6 +13,8 @@ public interface OrderDao extends JpaRepository<Oorder,Integer> {
     @Query("select e from Oorder e where e.id = :id")
     Oorder findByMyId(@Param("id") Integer id);
 
-    @Query("SELECT NEW Oorder (o.id, o.expectedgrandtotal) FROM Oorder o")
-    List<Oorder> findAllTotalId();
+    @Query("SELECT NEW Oorder(o.id,o.exporter) FROM Oorder o")
+    List<Oorder> findAllByIdExporter();
+
+
 }

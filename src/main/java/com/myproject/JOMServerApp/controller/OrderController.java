@@ -2,6 +2,7 @@ package com.myproject.JOMServerApp.controller;
 
 
 import com.myproject.JOMServerApp.dao.OrderDao;
+
 import com.myproject.JOMServerApp.entity.Oorder;
 import com.myproject.JOMServerApp.entity.Orderproduct;
 import org.springframework.beans.BeanUtils;
@@ -43,6 +44,23 @@ public class OrderController {
         return orders;
 
     }
+
+
+    @GetMapping(path = "/list",produces = "application/json")
+    public List<Oorder> get(){
+
+        List<Oorder> oorders = this.orderdao.findAllByIdExporter();
+
+        oorders = oorders.stream().map(
+                oorder -> {
+                    Oorder o = new Oorder(oorder.getId(), oorder.getExporter());
+                    return  o;
+                }
+        ).collect(Collectors.toList());
+
+        return oorders;
+    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

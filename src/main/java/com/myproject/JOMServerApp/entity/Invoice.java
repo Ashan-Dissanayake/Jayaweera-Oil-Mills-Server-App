@@ -31,17 +31,15 @@ public class Invoice {
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
     private Employee employee;
-    @JsonIgnore
-    @OneToMany(mappedBy = "invoice")
-    private Collection<Invoiceorderproduct> invoiceorderproducts;
+    @OneToMany(mappedBy = "invoice" ,cascade = CascadeType.ALL,orphanRemoval = true)
+    private Collection<Invoiceproduct> invoiceproducts;
 
     public Invoice(){}
 
-    public Invoice(int id, String name){
+    public Invoice(Integer id,String name){
         this.id = id;
         this.name = name;
     }
-
 
     public Integer getId() {
         return id;
@@ -75,6 +73,30 @@ public class Invoice {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Invoice invoice = (Invoice) o;
+
+        if (id != null ? !id.equals(invoice.id) : invoice.id != null) return false;
+        if (grandtotal != null ? !grandtotal.equals(invoice.grandtotal) : invoice.grandtotal != null) return false;
+        if (date != null ? !date.equals(invoice.date) : invoice.date != null) return false;
+        if (name != null ? !name.equals(invoice.name) : invoice.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (grandtotal != null ? grandtotal.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
     public Oorder getOorder() {
         return oorder;
     }
@@ -99,11 +121,11 @@ public class Invoice {
         this.employee = employee;
     }
 
-    public Collection<Invoiceorderproduct> getInvoiceorderproducts() {
-        return invoiceorderproducts;
+    public Collection<Invoiceproduct> getInvoiceproducts() {
+        return invoiceproducts;
     }
 
-    public void setInvoiceorderproducts(Collection<Invoiceorderproduct> invoiceorderproducts) {
-        this.invoiceorderproducts = invoiceorderproducts;
+    public void setInvoiceproducts(Collection<Invoiceproduct> invoiceproducts) {
+        this.invoiceproducts = invoiceproducts;
     }
 }
